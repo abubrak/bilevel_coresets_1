@@ -5,9 +5,16 @@ import sys, os
 import argparse
 import random
 
-# adapt these to you setup
-NR_GPUS = 4
-NR_PROCESSES = 32
+# 导入 GPU 配置检测（适配 Colab 单 GPU 环境）
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from gpu_config import detect_gpu_config, get_cuda_visible_devices
+
+# 自动检测 GPU 配置
+gpu_config = detect_gpu_config()
+NR_GPUS = gpu_config['NR_GPUS']
+NR_PROCESSES = gpu_config['NR_PROCESSES']
+
+print(f"检测到 GPU 数量: {NR_GPUS}, 进程数: {NR_PROCESSES}")
 
 cnt = -1
 
@@ -20,8 +27,12 @@ def call_script(args):
     crt_env['MKL_NUM_THREADS'] = '1'
     crt_env['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
     cnt += 1
-    gpu = cnt % NR_GPUS
-    crt_env['CUDA_VISIBLE_DEVICES'] = str(gpu)
+    gpu_id = get_cuda_visible_devices(cnt, NR_GPUS)
+    if gpu_id != '':
+        crt_env['CUDA_VISIBLE_DEVICES'] = gpu_id
+    else:
+        # CPU 模式，不设置 CUDA_VISIBLE_DEVICES
+        pass
     print(args)
     sp.call([sys.executable, '{}.py'.format(exp), '--seed', str(seed), '--method', method,
              '--coreset_size', str(coreset_size)], env=crt_env)

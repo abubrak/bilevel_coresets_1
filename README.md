@@ -46,6 +46,29 @@ pip install -r requirements.txt
 If you are planning to use the NTK proxy, consider installing the GPU version of JAX: instructions [here](https://github.com/google/jax#installation).
 If you would like to run the experiments, add the project root to your PYTHONPATH env variable.
 
+## Google Colab Support
+
+This project now supports running in Google Colab GPU environments.
+
+### Quick Start
+
+1. Open [demo.ipynb](demo.ipynb) in Colab
+2. Select GPU runtime (Runtime → Change runtime type → GPU)
+3. Run all cells in sequence
+
+### Dependencies
+
+- PyTorch >= 2.3.0
+- JAX >= 0.4.30 (CUDA version auto-detected)
+- neural-tangents >= 0.7.0
+- Python >= 3.10
+
+### Notes
+
+- NTK computation requires GPU, recommended to use Colab's GPU runtime
+- If you encounter CUDA out of memory, reduce `candidate_batch_size` or `limit` parameters
+- See [COLAB_GUIDE.md](COLAB_GUIDE.md) for detailed instructions
+
 ## Data Summarization
 
 Change dir to ```data_summarization```. For running and plotting the **MNIST summarization** experiment, adjust the globals

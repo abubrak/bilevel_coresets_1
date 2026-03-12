@@ -1,11 +1,20 @@
-numpy==1.19.2
-scikit-learn==0.23.2
-scipy==1.5.2
-torch==1.6.0
-torchvision==0.7.0
-matplotlib==3.3.2
-jax==0.2.3
-jaxlib==0.1.55
-neural-tangents==0.3.4
-seaborn==0.10.1
-tqdm==4.36.1
+# === Core Deep Learning Frameworks ===
+torch>=2.3.0
+torchvision>=0.18.0
+
+# JAX (CUDA version will be handled in demo.ipynb)
+jax>=0.4.30
+jaxlib>=0.4.30
+
+# Neural Tangents for NTK computation
+neural-tangents>=0.7.0
+
+# === Scientific Computing (often pre-installed in Colab) ===
+numpy>=1.24.0
+scipy>=1.11.0
+scikit-learn>=1.3.0
+
+# === Utilities ===
+matplotlib>=3.7.0
+seaborn>=0.12.0
+tqdm>=4.66.0

@@ -20,8 +20,12 @@ def call_script(args):
     crt_env['MKL_NUM_THREADS'] = '1'
     crt_env['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
     cnt += 1
-    gpu = cnt % NR_GPUS
-    crt_env['CUDA_VISIBLE_DEVICES'] = str(gpu)
+    gpu_id = get_cuda_visible_devices(cnt, NR_GPUS)
+    if gpu_id != '':
+        crt_env['CUDA_VISIBLE_DEVICES'] = gpu_id
+    else:
+        # CPU 模式，不设置 CUDA_VISIBLE_DEVICES
+        pass
     print(args)
     sp.call([sys.executable, 'splitcifar.py', '--seed', str(seed), '--dataset', dataset, '--method', method,
              '--buffer_size', str(buffer_size), '--beta', str(beta), '--nr_epochs', str(nr_epochs)], env=crt_env)
