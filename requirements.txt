@@ -2,9 +2,10 @@
 torch>=2.3.0
 torchvision>=0.18.0
 
-# JAX (CUDA version will be handled in demo.ipynb)
-jax>=0.4.30
-jaxlib>=0.4.30
+# JAX 0.4.29 - Last version compatible with neural-tangents 0.6.5
+# (JAX 0.4.30+ removed jax.core.Jaxpr which neural-tangents depends on)
+jax==0.4.29
+jaxlib==0.4.29
 
 # Neural Tangents for NTK computation
 neural-tangents>=0.6.5
