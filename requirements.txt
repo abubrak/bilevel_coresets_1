@@ -7,7 +7,7 @@ jax>=0.4.30
 jaxlib>=0.4.30
 
 # Neural Tangents for NTK computation
-neural-tangents>=0.7.0
+neural-tangents>=0.6.5
 
 # === Scientific Computing (often pre-installed in Colab) ===
 numpy>=1.24.0
