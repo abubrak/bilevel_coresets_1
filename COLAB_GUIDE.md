@@ -41,6 +41,12 @@ print(f"JAX: {jax.__version__}, Devices: {jax.devices()}")
 !pip install jax jaxlib[cuda11]
 ```
 
+**重要**: 由于 neural-tangents 0.6.5 的依赖限制，本项目使用 JAX 0.4.29。
+请确保安装正确的版本：
+```bash
+!pip install jax==0.4.29 jaxlib==0.4.29
+```
+
 ### CUDA OOM
 减小 batch size 或数据集大小：
 ```python
@@ -50,17 +56,33 @@ candidate_batch_size = 500  # 从 1000 减小
 
 ### 常见错误及解决方案
 
-#### 错误 1: `ImportError: cannot import name 'jit' from 'jax.api'`
+#### 错误 1: 
 **原因**: JAX 0.3+ 的 API 变化
 **解决**: 已通过修改导入语句修复 (`from jax import jit`)
 
-#### 错误 2: `CUDA SETUP failed`
+#### 错误 2: 
 **原因**: JAX CUDA 版本不匹配
 **解决**: 已通过自动检测 CUDA 版本修复
 
-#### 错误 3: `RuntimeError: CUDA out of memory`
+#### 错误 3: 
 **原因**: NTK 计算消耗大量内存
 **解决**: 减小 `limit` 或 `candidate_batch_size`
+
+#### 错误 4: 
+**原因**: JAX 版本不兼容
+- JAX 0.4.30+ 移除了 `jax.core.Jaxpr` (移动到 `jax.extend.core.Jaxpr`)
+- neural-tangents 0.6.5 仍然依赖于旧的 `jax.core.Jaxpr`
+
+**解决**: 
+1. 确保使用 JAX 0.4.29:
+   ```bash
+   !pip install jax==0.4.29 jaxlib==0.4.29
+   ```
+2. 验证版本:
+   ```python
+   import jax
+   print(jax.__version__)  # 应该显示 0.4.29
+   ```
 
 ## GPU 配置说明
 
